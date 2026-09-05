@@ -42,7 +42,7 @@ export function WorksSection() {
                     src={work.image || '/placeholder.svg'}
                     alt={work.name}
                     fill
-                    className="object-cover transition-transform duration-700 group-hover:scale-105"
+                    className="transform-gpu object-cover transition-transform duration-700 ease-out group-hover:scale-105"
                     sizes="(min-width: 768px) 50vw, 100vw"
                   />
                   <span className="absolute inset-0 flex items-center justify-center bg-scrim/0 transition-colors duration-500 group-hover:bg-scrim/40">

@@ -90,8 +90,19 @@
   * {
     @apply border-border outline-ring/50;
   }
+  html {
+    -webkit-text-size-adjust: 100%;
+    overflow-x: hidden;
+  }
   body {
     @apply bg-background text-foreground;
+    -webkit-tap-highlight-color: transparent;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+    overflow-x: hidden;
+  }
+  img {
+    -webkit-user-drag: none;
   }
 }
 
@@ -117,6 +128,28 @@
   background-position: center;
   background-repeat: no-repeat;
   background-attachment: fixed;
+}
+
+/* background-attachment: fixed is janky/unsupported on touch devices —
+   fall back to a normal scrolling background there for smoothness. */
+@media (hover: none), (pointer: coarse), (max-width: 768px) {
+  .parallax-fixed {
+    background-attachment: scroll;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+  .parallax-fixed {
+    background-attachment: scroll;
+  }
 }
 
 .hero-range::-webkit-slider-thumb {

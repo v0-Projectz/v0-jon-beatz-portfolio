@@ -103,12 +103,13 @@ export function LightboxProvider({ children }: { children: ReactNode }) {
             )}
 
             <figure className="relative flex max-h-full max-w-5xl flex-col items-center">
-              <div className="relative h-[62vh] w-[86vw] max-w-5xl md:w-[70vw]">
+              <div className="relative h-[58vh] w-[86vw] max-w-5xl sm:h-[62vh] md:w-[70vw]">
                 <Image
+                  key={current.src}
                   src={current.src || '/placeholder.svg'}
                   alt={current.alt}
                   fill
-                  className="object-contain"
+                  className="object-contain animate-in fade-in zoom-in-95 duration-300 ease-out"
                   sizes="86vw"
                   priority
                 />

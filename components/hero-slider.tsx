@@ -122,7 +122,7 @@ export function HeroSlider() {
   }
 
   return (
-    <section id="top" className="relative h-screen min-h-[640px] w-full overflow-hidden bg-scrim">
+    <section id="top" className="relative h-[100svh] min-h-[560px] w-full overflow-hidden bg-scrim">
       {heroSlides.map((slide, i) => (
         <div key={slide.subtitle} className="absolute inset-0" style={outerStyle(i)} aria-hidden={i !== active}>
           <div className="relative h-full w-full will-change-transform" style={innerStyle(i)}>
@@ -141,18 +141,18 @@ export function HeroSlider() {
 
       {/* Centered title */}
       <div className="pointer-events-none relative z-10 flex h-full flex-col items-center justify-center px-6 text-center text-band-foreground">
-        <span className="font-mono text-xs tracking-[0.4em] text-band-foreground/70">
+        <span className="font-mono text-[0.65rem] tracking-[0.35em] text-band-foreground/70 sm:text-xs sm:tracking-[0.4em]">
           {heroSlides[active].subtitle}
         </span>
-        <h1 className="mt-6 text-5xl font-light uppercase tracking-[0.25em] sm:text-6xl md:text-7xl">
+        <h1 className="mt-5 max-w-full text-balance text-3xl font-light uppercase tracking-[0.12em] sm:mt-6 sm:text-5xl sm:tracking-[0.2em] md:text-7xl md:tracking-[0.25em]">
           {studio.name}
         </h1>
-        <div className="mt-6 flex items-center gap-4">
-          <span className="h-px w-10 bg-band-foreground/40" />
-          <span className="text-[0.7rem] uppercase tracking-[0.45em] text-band-foreground/80">
+        <div className="mt-5 flex items-center gap-3 sm:mt-6 sm:gap-4">
+          <span className="h-px w-6 bg-band-foreground/40 sm:w-10" />
+          <span className="text-[0.6rem] uppercase tracking-[0.3em] text-band-foreground/80 sm:text-[0.7rem] sm:tracking-[0.45em]">
             {studio.tagline}
           </span>
-          <span className="h-px w-10 bg-band-foreground/40" />
+          <span className="h-px w-6 bg-band-foreground/40 sm:w-10" />
         </div>
       </div>
 
@@ -201,7 +201,7 @@ export function HeroSlider() {
             <div
               role="dialog"
               aria-label="Slider settings"
-              className="relative z-10 mb-3 w-64 border border-band-foreground/20 bg-scrim/85 p-5 text-band-foreground backdrop-blur-md"
+              className="relative z-10 mb-3 max-h-[70vh] w-[min(16rem,calc(100vw-3rem))] overflow-y-auto border border-band-foreground/20 bg-scrim/85 p-5 text-band-foreground backdrop-blur-md"
             >
               <PickerGroup label="Transition">
                 {TRANSITIONS.map((t) => (

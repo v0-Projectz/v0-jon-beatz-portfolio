@@ -15,7 +15,7 @@ export function SectionHeading({
     <Reveal className="relative flex flex-col items-center pb-14 text-center">
       <span
         aria-hidden="true"
-        className="pointer-events-none absolute -top-8 left-1/2 -translate-x-1/2 select-none text-6xl font-bold uppercase tracking-[0.18em] text-foreground/[0.05] sm:text-7xl md:text-8xl"
+        className="pointer-events-none absolute -top-6 left-1/2 max-w-[92vw] -translate-x-1/2 select-none text-[2.5rem] font-bold uppercase tracking-[0.12em] text-foreground/[0.05] sm:-top-8 sm:text-7xl sm:tracking-[0.18em] md:text-8xl"
       >
         {ghost}
       </span>

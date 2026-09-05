@@ -20,7 +20,7 @@ export function NewsSection() {
                     src={newsImages[i] || '/placeholder.svg'}
                     alt={item.title}
                     fill
-                    className="object-cover transition-transform duration-700 group-hover:scale-105"
+                    className="transform-gpu object-cover transition-transform duration-700 ease-out group-hover:scale-105"
                     sizes="(min-width: 768px) 50vw, 100vw"
                   />
                 </figure>

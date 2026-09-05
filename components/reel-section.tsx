@@ -59,7 +59,7 @@ export function ReelSection() {
                             src={item.image || '/placeholder.svg'}
                             alt={item.name}
                             fill
-                            className="object-cover grayscale transition-all duration-700 group-hover:scale-105 group-hover:grayscale-0"
+                            className="transform-gpu object-cover grayscale transition-[transform,filter] duration-700 ease-out group-hover:scale-105 group-hover:grayscale-0"
                             sizes="(min-width: 768px) 33vw, 100vw"
                           />
                           <div className="absolute inset-0 bg-scrim/20 transition-colors duration-500 group-hover:bg-scrim/40" />
