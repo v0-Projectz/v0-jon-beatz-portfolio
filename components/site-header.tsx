@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from 'react'
 import { Menu, X } from 'lucide-react'
+import { ThemeToggle } from '@/components/theme-toggle'
 import { nav, studio } from '@/lib/site-data'
 
 export function SiteHeader() {
@@ -43,17 +44,21 @@ export function SiteHeader() {
               {item.label}
             </a>
           ))}
+          <ThemeToggle />
         </nav>
 
-        <button
-          type="button"
-          className="p-2 md:hidden"
-          aria-label={open ? 'Close menu' : 'Open menu'}
-          aria-expanded={open}
-          onClick={() => setOpen((v) => !v)}
-        >
-          {open ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
-        </button>
+        <div className="flex items-center gap-2 md:hidden">
+          <ThemeToggle />
+          <button
+            type="button"
+            className="p-2"
+            aria-label={open ? 'Close menu' : 'Open menu'}
+            aria-expanded={open}
+            onClick={() => setOpen((v) => !v)}
+          >
+            {open ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
+          </button>
+        </div>
       </div>
 
       {open && (

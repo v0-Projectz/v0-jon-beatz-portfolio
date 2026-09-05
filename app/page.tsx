@@ -9,13 +9,15 @@ import { ServicesSection } from '@/components/services-section'
 import { NewsSection } from '@/components/news-section'
 import { ContactSection } from '@/components/contact-section'
 import { SiteFooter } from '@/components/site-footer'
+import { LightboxProvider } from '@/components/lightbox'
 import { quotes } from '@/lib/site-data'
 
 export default function Home() {
   return (
-    <div className="min-h-screen bg-background">
-      <SiteHeader />
-      <main>
+    <LightboxProvider>
+      <div className="min-h-screen bg-background">
+        <SiteHeader />
+        <main>
         <HeroSlider />
         <AboutSection />
         <StatsBand />
@@ -29,6 +31,7 @@ export default function Home() {
         <ParallaxBand image="/images/hero-studio.png" />
       </main>
       <SiteFooter />
-    </div>
+      </div>
+    </LightboxProvider>
   )
 }
