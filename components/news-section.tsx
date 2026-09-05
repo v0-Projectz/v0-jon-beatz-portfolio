@@ -1,30 +1,40 @@
+import Image from 'next/image'
 import { SectionHeading } from '@/components/section-heading'
-import { news, quotes } from '@/lib/site-data'
+import { Reveal } from '@/components/reveal'
+import { news } from '@/lib/site-data'
+
+const newsImages = ['/images/reel-liveset.png', '/images/reel-motion.png']
 
 export function NewsSection() {
   return (
-    <section id="news" className="container-wide scroll-mt-24 py-24 md:py-32">
-      <SectionHeading index="// 05" title="News" lead="Current projects" discipline="From the Studio" />
+    <section id="news" className="scroll-mt-20 bg-background py-24 md:py-32">
+      <div className="container-wide">
+        <SectionHeading index="// 05" ghost="News" title="News" />
 
-      <div className="mt-14 grid gap-12 lg:grid-cols-2 lg:gap-16">
-        {news.map((item) => (
-          <article key={item.title} className="flex flex-col gap-4 border-t border-border pt-8">
-            <h3 className="text-3xl font-bold tracking-tight">{item.title}</h3>
-            <span className="font-mono text-xs uppercase tracking-[0.2em] text-primary">{item.meta}</span>
-            <p className="leading-relaxed text-muted-foreground">{item.body}</p>
-          </article>
-        ))}
-      </div>
-
-      <div className="mt-20 grid gap-8 border-t border-border pt-12 md:grid-cols-3">
-        {quotes.map((quote) => (
-          <blockquote key={quote.text} className="flex flex-col gap-4">
-            <p className="text-pretty text-lg leading-relaxed">{`"${quote.text}"`}</p>
-            <cite className="font-mono text-xs uppercase not-italic tracking-[0.2em] text-muted-foreground">
-              — {quote.author}
-            </cite>
-          </blockquote>
-        ))}
+        <div className="mx-auto grid max-w-4xl gap-12 md:grid-cols-2">
+          {news.map((item, i) => (
+            <Reveal key={item.title} delay={i * 120}>
+              <article className="group flex flex-col">
+                <figure className="relative aspect-video w-full overflow-hidden bg-band">
+                  <Image
+                    src={newsImages[i] || '/placeholder.svg'}
+                    alt={item.title}
+                    fill
+                    className="object-cover transition-transform duration-700 group-hover:scale-105"
+                    sizes="(min-width: 768px) 50vw, 100vw"
+                  />
+                </figure>
+                <span className="mt-5 font-mono text-[0.65rem] uppercase tracking-[0.3em] text-accent">
+                  {item.meta}
+                </span>
+                <h3 className="mt-2 text-xl font-light uppercase tracking-[0.1em] text-foreground">
+                  {item.title}
+                </h3>
+                <p className="mt-3 text-pretty leading-relaxed text-muted-foreground">{item.body}</p>
+              </article>
+            </Reveal>
+          ))}
+        </div>
       </div>
     </section>
   )

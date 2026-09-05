@@ -2,16 +2,19 @@ import { studio } from '@/lib/site-data'
 
 export function SiteFooter() {
   return (
-    <footer className="container-wide flex flex-col gap-4 py-10 md:flex-row md:items-center md:justify-between">
-      <div className="flex items-baseline gap-2">
-        <span className="text-lg font-bold tracking-tight">{studio.name}</span>
-        <span className="font-mono text-[0.65rem] uppercase tracking-[0.3em] text-primary">
-          {studio.artist}
-        </span>
+    <footer className="bg-background py-16 text-center">
+      <div className="container-wide flex flex-col items-center gap-4">
+        <div className="flex items-baseline gap-2">
+          <span className="text-base font-semibold uppercase tracking-[0.35em]">MSC</span>
+          <span className="font-mono text-[0.6rem] uppercase tracking-[0.3em] text-accent">
+            Projectz
+          </span>
+        </div>
+        <span className="h-px w-10 bg-border" />
+        <p className="font-mono text-[0.6rem] uppercase tracking-[0.3em] text-muted-foreground">
+          © {new Date().getFullYear()} {studio.name} — {studio.artist}
+        </p>
       </div>
-      <p className="font-mono text-xs uppercase tracking-[0.2em] text-muted-foreground">
-        © {new Date().getFullYear()} {studio.name} — All rights reserved
-      </p>
     </footer>
   )
 }

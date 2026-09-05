@@ -5,7 +5,7 @@
 @custom-variant dark (&:is(.dark *));
 
 @theme inline {
-  --font-sans: var(--font-space-grotesk), ui-sans-serif, system-ui, sans-serif;
+  --font-sans: var(--font-raleway), ui-sans-serif, system-ui, sans-serif;
   --font-mono: var(--font-jetbrains-mono), ui-monospace, monospace;
 
   --color-background: var(--background);
@@ -26,33 +26,39 @@
   --color-border: var(--border);
   --color-input: var(--input);
   --color-ring: var(--ring);
-  --radius-sm: calc(var(--radius) * 0.6);
-  --radius-md: calc(var(--radius) * 0.8);
-  --radius-lg: var(--radius);
-  --radius-xl: calc(var(--radius) * 1.4);
+  --color-band: var(--band);
+  --color-band-foreground: var(--band-foreground);
+  --color-scrim: var(--scrim);
+  --radius-sm: 0px;
+  --radius-md: 0px;
+  --radius-lg: 0px;
+  --radius-xl: 0px;
 }
 
 :root {
-  color-scheme: dark;
-  --background: oklch(0.135 0.004 60);
-  --foreground: oklch(0.95 0.005 90);
-  --card: oklch(0.17 0.005 60);
-  --card-foreground: oklch(0.95 0.005 90);
-  --popover: oklch(0.17 0.005 60);
-  --popover-foreground: oklch(0.95 0.005 90);
-  --primary: oklch(0.8 0.14 75);
-  --primary-foreground: oklch(0.16 0.02 70);
-  --secondary: oklch(0.22 0.006 60);
-  --secondary-foreground: oklch(0.95 0.005 90);
-  --muted: oklch(0.22 0.006 60);
-  --muted-foreground: oklch(0.66 0.01 70);
-  --accent: oklch(0.8 0.14 75);
-  --accent-foreground: oklch(0.16 0.02 70);
-  --destructive: oklch(0.63 0.2 25);
-  --border: oklch(1 0 0 / 10%);
-  --input: oklch(1 0 0 / 14%);
-  --ring: oklch(0.8 0.14 75);
-  --radius: 0.25rem;
+  color-scheme: light;
+  --background: oklch(0.99 0 0);
+  --foreground: oklch(0.2 0 0);
+  --card: oklch(1 0 0);
+  --card-foreground: oklch(0.2 0 0);
+  --popover: oklch(1 0 0);
+  --popover-foreground: oklch(0.2 0 0);
+  --primary: oklch(0.22 0 0);
+  --primary-foreground: oklch(0.98 0 0);
+  --secondary: oklch(0.96 0 0);
+  --secondary-foreground: oklch(0.2 0 0);
+  --muted: oklch(0.96 0 0);
+  --muted-foreground: oklch(0.52 0 0);
+  --accent: oklch(0.62 0.1 72);
+  --accent-foreground: oklch(0.99 0 0);
+  --destructive: oklch(0.6 0.2 25);
+  --border: oklch(0.9 0 0);
+  --input: oklch(0.9 0 0);
+  --ring: oklch(0.62 0.1 72);
+  --band: oklch(0.16 0.005 60);
+  --band-foreground: oklch(0.96 0 0);
+  --scrim: oklch(0.08 0 0);
+  --radius: 0rem;
 }
 
 @layer base {
@@ -65,5 +71,25 @@
 }
 
 @utility container-wide {
-  @apply mx-auto w-full max-w-7xl px-6 md:px-10;
+  @apply mx-auto w-full max-w-6xl px-6 md:px-8;
+}
+
+@keyframes kenburns {
+  from {
+    transform: scale(1);
+  }
+  to {
+    transform: scale(1.12);
+  }
+}
+
+@utility animate-kenburns {
+  animation: kenburns 7s ease-out forwards;
+}
+
+@utility parallax-fixed {
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
 }

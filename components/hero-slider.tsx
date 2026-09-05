@@ -1,70 +1,90 @@
 'use client'
 
-import { useEffect, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import Image from 'next/image'
-import { heroSlides } from '@/lib/site-data'
+import { ChevronLeft, ChevronRight } from 'lucide-react'
+import { heroSlides, studio } from '@/lib/site-data'
 
 export function HeroSlider() {
   const [active, setActive] = useState(0)
+  const count = heroSlides.length
+
+  const go = useCallback((next: number) => setActive((next + count) % count), [count])
 
   useEffect(() => {
-    const id = setInterval(() => {
-      setActive((v) => (v + 1) % heroSlides.length)
-    }, 5000)
+    const id = setInterval(() => setActive((v) => (v + 1) % count), 6000)
     return () => clearInterval(id)
-  }, [])
+  }, [count])
 
   return (
     <section id="top" className="relative h-screen min-h-[640px] w-full overflow-hidden">
       {heroSlides.map((slide, i) => (
         <div
           key={slide.subtitle}
-          className={`absolute inset-0 transition-opacity duration-1000 ${i === active ? 'opacity-100' : 'opacity-0'}`}
+          className={`absolute inset-0 transition-opacity duration-[1200ms] ${i === active ? 'opacity-100' : 'opacity-0'}`}
           aria-hidden={i !== active}
         >
-          <Image
-            src={slide.image || '/placeholder.svg'}
-            alt={slide.alt}
-            fill
-            priority={i === 0}
-            className="object-cover"
-            sizes="100vw"
-          />
-          <div className="absolute inset-0 bg-gradient-to-t from-background via-background/50 to-background/30" />
+          <div className={`relative h-full w-full ${i === active ? 'animate-kenburns' : ''}`}>
+            <Image
+              src={slide.image || '/placeholder.svg'}
+              alt={slide.alt}
+              fill
+              priority={i === 0}
+              className="object-cover"
+              sizes="100vw"
+            />
+          </div>
+          <div className="absolute inset-0 bg-scrim/55" />
         </div>
       ))}
 
-      <div className="container-wide relative flex h-full flex-col justify-end pb-20">
-        <span className="font-mono text-sm tracking-[0.3em] text-primary">
-          {heroSlides[active].kicker}
-        </span>
-        <h1 className="mt-4 text-balance text-6xl font-bold tracking-tighter sm:text-7xl md:text-8xl lg:text-9xl">
-          {heroSlides[active].title}
-        </h1>
-        <p className="mt-2 max-w-xl text-pretty text-xl text-muted-foreground md:text-2xl">
+      {/* Centered title */}
+      <div className="relative z-10 flex h-full flex-col items-center justify-center px-6 text-center text-band-foreground">
+        <span className="font-mono text-xs tracking-[0.4em] text-band-foreground/70">
           {heroSlides[active].subtitle}
-        </p>
-
-        <div className="mt-10 flex items-center gap-4">
-          {heroSlides.map((slide, i) => (
-            <button
-              key={slide.subtitle}
-              type="button"
-              onClick={() => setActive(i)}
-              aria-label={`Show slide ${i + 1}: ${slide.subtitle}`}
-              className="group flex items-center gap-2"
-            >
-              <span
-                className={`h-px transition-all duration-500 ${i === active ? 'w-12 bg-primary' : 'w-6 bg-border group-hover:bg-muted-foreground'}`}
-              />
-              <span
-                className={`font-mono text-xs ${i === active ? 'text-primary' : 'text-muted-foreground'}`}
-              >
-                0{i + 1}
-              </span>
-            </button>
-          ))}
+        </span>
+        <h1 className="mt-6 text-5xl font-light uppercase tracking-[0.25em] sm:text-6xl md:text-7xl">
+          {studio.name}
+        </h1>
+        <div className="mt-6 flex items-center gap-4">
+          <span className="h-px w-10 bg-band-foreground/40" />
+          <span className="text-[0.7rem] uppercase tracking-[0.45em] text-band-foreground/80">
+            {studio.tagline}
+          </span>
+          <span className="h-px w-10 bg-band-foreground/40" />
         </div>
+      </div>
+
+      {/* Arrows */}
+      <button
+        type="button"
+        onClick={() => go(active - 1)}
+        aria-label="Previous slide"
+        className="absolute left-4 top-1/2 z-20 -translate-y-1/2 p-3 text-band-foreground/60 transition-colors hover:text-band-foreground md:left-8"
+      >
+        <ChevronLeft className="h-7 w-7" strokeWidth={1} />
+      </button>
+      <button
+        type="button"
+        onClick={() => go(active + 1)}
+        aria-label="Next slide"
+        className="absolute right-4 top-1/2 z-20 -translate-y-1/2 p-3 text-band-foreground/60 transition-colors hover:text-band-foreground md:right-8"
+      >
+        <ChevronRight className="h-7 w-7" strokeWidth={1} />
+      </button>
+
+      {/* Dots */}
+      <div className="absolute bottom-10 left-1/2 z-20 flex -translate-x-1/2 items-center gap-3">
+        {heroSlides.map((slide, i) => (
+          <button
+            key={slide.subtitle}
+            type="button"
+            onClick={() => setActive(i)}
+            aria-label={`Show slide ${i + 1}`}
+            aria-current={i === active}
+            className={`h-2 w-2 rounded-full border border-band-foreground/70 transition-all ${i === active ? 'bg-band-foreground' : 'bg-transparent hover:bg-band-foreground/50'}`}
+          />
+        ))}
       </div>
     </section>
   )
