@@ -10,6 +10,7 @@ import { NewsSection } from '@/components/news-section'
 import { ContactSection } from '@/components/contact-section'
 import { SiteFooter } from '@/components/site-footer'
 import { LightboxProvider } from '@/components/lightbox'
+import { BackToTop } from '@/components/back-to-top'
 import { quotes } from '@/lib/site-data'
 
 export default function Home() {
@@ -31,6 +32,7 @@ export default function Home() {
         <ParallaxBand image="/images/hero-studio.png" />
       </main>
       <SiteFooter />
+      <BackToTop />
       </div>
     </LightboxProvider>
   )
