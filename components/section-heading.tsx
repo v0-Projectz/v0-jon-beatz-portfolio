@@ -4,10 +4,12 @@ export function SectionHeading({
   index,
   ghost,
   title,
+  subtitle,
 }: {
   index: string
   ghost: string
   title: string
+  subtitle?: string
 }) {
   return (
     <Reveal className="relative flex flex-col items-center pb-14 text-center">
@@ -25,6 +27,11 @@ export function SectionHeading({
         </h2>
         <span className="h-px w-8 bg-border" />
       </div>
+      {subtitle && (
+        <p className="relative mt-3 font-mono text-[0.6rem] uppercase tracking-[0.35em] text-muted-foreground">
+          {subtitle}
+        </p>
+      )}
     </Reveal>
   )
 }
