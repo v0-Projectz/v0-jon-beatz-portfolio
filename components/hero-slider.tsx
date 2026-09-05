@@ -42,7 +42,19 @@ export function HeroSlider() {
   const speedMs = seconds * 1000
   const setClampedSeconds = (v: number) => setSeconds(Math.min(MAX_SECONDS, Math.max(MIN_SECONDS, v)))
 
-  useEffect(() => setMounted(true), [])
+  // Double rAF guarantees the initial scale(1) is committed and painted before
+  // we flip to scale(1.12), so the very first slide's Ken Burns zoom animates
+  // on load instead of snapping straight to the zoomed state.
+  useEffect(() => {
+    let r2 = 0
+    const r1 = requestAnimationFrame(() => {
+      r2 = requestAnimationFrame(() => setMounted(true))
+    })
+    return () => {
+      cancelAnimationFrame(r1)
+      cancelAnimationFrame(r2)
+    }
+  }, [])
 
   const change = useCallback(
     (direction: number, target?: number) => {
@@ -58,12 +70,15 @@ export function HeroSlider() {
     [count, transition],
   )
 
-  // Autoplay
+  // Autoplay — a self-re-arming timeout keyed on `active` so the countdown
+  // fully resets whenever the slide changes, including manual next/prev/dot
+  // clicks. Each slide gets its complete duration on screen no matter how you
+  // arrived at it (rather than inheriting the previous slide's leftover time).
   useEffect(() => {
     if (!autoplay) return
-    const id = setInterval(() => change(1), speedMs)
-    return () => clearInterval(id)
-  }, [autoplay, speedMs, change])
+    const id = setTimeout(() => change(1), speedMs)
+    return () => clearTimeout(id)
+  }, [autoplay, speedMs, change, active])
 
   // Slide needs an off-screen "start" frame before it animates in
   useEffect(() => {
