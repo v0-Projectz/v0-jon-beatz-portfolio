@@ -1,16 +1,27 @@
+import { SiteHeader } from '@/components/site-header'
+import { HeroSlider } from '@/components/hero-slider'
+import { AboutSection } from '@/components/about-section'
+import { ReelSection } from '@/components/reel-section'
+import { WorksSection } from '@/components/works-section'
+import { ServicesSection } from '@/components/services-section'
+import { NewsSection } from '@/components/news-section'
+import { ContactSection } from '@/components/contact-section'
+import { SiteFooter } from '@/components/site-footer'
+
 export default function Home() {
   return (
-    <div className="flex min-h-screen items-center justify-center font-sans">
-      <main className="flex w-full max-w-3xl flex-col items-center gap-8 px-6 py-16 text-center sm:items-start sm:text-left">
-        <div className="flex flex-col gap-4">
-          <h1 className="text-4xl font-bold tracking-tight">
-            v0-Jon-Beatz-Portfolio
-          </h1>
-          <p className="max-w-md text-lg text-muted-foreground">
-            To get started, send a prompt or modify this page directly.
-          </p>
-        </div>
+    <div className="min-h-screen bg-background">
+      <SiteHeader />
+      <main>
+        <HeroSlider />
+        <AboutSection />
+        <ReelSection />
+        <WorksSection />
+        <ServicesSection />
+        <NewsSection />
+        <ContactSection />
       </main>
+      <SiteFooter />
     </div>
-  );
+  )
 }
