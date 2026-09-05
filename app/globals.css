@@ -118,3 +118,23 @@
   background-repeat: no-repeat;
   background-attachment: fixed;
 }
+
+.hero-range::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  height: 0.9rem;
+  width: 0.9rem;
+  border-radius: 9999px;
+  background: var(--accent);
+  cursor: pointer;
+  border: 2px solid var(--scrim);
+}
+
+.hero-range::-moz-range-thumb {
+  height: 0.9rem;
+  width: 0.9rem;
+  border-radius: 9999px;
+  background: var(--accent);
+  cursor: pointer;
+  border: 2px solid var(--scrim);
+}

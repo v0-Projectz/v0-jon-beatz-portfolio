@@ -2,24 +2,26 @@
 
 import { useCallback, useEffect, useState } from 'react'
 import Image from 'next/image'
-import { ChevronLeft, ChevronRight, Settings2, X } from 'lucide-react'
+import { ChevronLeft, ChevronRight, Minus, Plus, Settings2, X } from 'lucide-react'
 import { heroSlides, studio } from '@/lib/site-data'
 
 type Transition = 'fade' | 'slide' | 'dip'
-type Speed = 'slow' | 'normal' | 'fast'
 
-const SPEED_MS: Record<Speed, number> = { slow: 9000, normal: 6000, fast: 3500 }
 const TRANS_MS: Record<Transition, number> = { fade: 1200, dip: 1350, slide: 950 }
+
+const MIN_SECONDS = 2
+const MAX_SECONDS = 15
+const DEFAULT_SECONDS = 6
 
 const TRANSITIONS: { value: Transition; label: string }[] = [
   { value: 'fade', label: 'Cross Fade' },
   { value: 'slide', label: 'Slide' },
   { value: 'dip', label: 'Dip to Black' },
 ]
-const SPEEDS: { value: Speed; label: string }[] = [
-  { value: 'slow', label: 'Slow' },
-  { value: 'normal', label: 'Normal' },
-  { value: 'fast', label: 'Fast' },
+const PRESETS: { label: string; seconds: number }[] = [
+  { label: 'Slow', seconds: 9 },
+  { label: 'Normal', seconds: 6 },
+  { label: 'Fast', seconds: 3 },
 ]
 
 export function HeroSlider() {
@@ -34,10 +36,11 @@ export function HeroSlider() {
   const [transition, setTransition] = useState<Transition>('fade')
   const [kenBurns, setKenBurns] = useState(true)
   const [autoplay, setAutoplay] = useState(true)
-  const [speed, setSpeed] = useState<Speed>('normal')
+  const [seconds, setSeconds] = useState(DEFAULT_SECONDS)
   const [menuOpen, setMenuOpen] = useState(false)
 
-  const speedMs = SPEED_MS[speed]
+  const speedMs = seconds * 1000
+  const setClampedSeconds = (v: number) => setSeconds(Math.min(MAX_SECONDS, Math.max(MIN_SECONDS, v)))
 
   useEffect(() => setMounted(true), [])
 
@@ -226,13 +229,46 @@ export function HeroSlider() {
                 </Pill>
               </PickerGroup>
 
-              <PickerGroup label="Speed">
-                {SPEEDS.map((s) => (
-                  <Pill key={s.value} active={speed === s.value} onClick={() => setSpeed(s.value)}>
-                    {s.label}
+              <PickerGroup label={`Duration — ${seconds}s`}>
+                {PRESETS.map((p) => (
+                  <Pill key={p.label} active={seconds === p.seconds} onClick={() => setSeconds(p.seconds)}>
+                    {p.label}
                   </Pill>
                 ))}
               </PickerGroup>
+
+              <div className="mb-1 flex items-center gap-2">
+                <button
+                  type="button"
+                  aria-label="Decrease duration by one second"
+                  onClick={() => setClampedSeconds(seconds - 1)}
+                  className="flex h-7 w-7 shrink-0 items-center justify-center border border-band-foreground/25 text-band-foreground/70 transition-colors hover:border-band-foreground/50 hover:text-band-foreground"
+                >
+                  <Minus className="h-3.5 w-3.5" strokeWidth={1.5} />
+                </button>
+                <input
+                  type="range"
+                  min={MIN_SECONDS}
+                  max={MAX_SECONDS}
+                  step={0.5}
+                  value={seconds}
+                  onChange={(e) => setClampedSeconds(Number(e.target.value))}
+                  aria-label="Seconds between slides"
+                  className="hero-range h-1 flex-1 cursor-pointer appearance-none rounded-full bg-band-foreground/25"
+                />
+                <button
+                  type="button"
+                  aria-label="Increase duration by one second"
+                  onClick={() => setClampedSeconds(seconds + 1)}
+                  className="flex h-7 w-7 shrink-0 items-center justify-center border border-band-foreground/25 text-band-foreground/70 transition-colors hover:border-band-foreground/50 hover:text-band-foreground"
+                >
+                  <Plus className="h-3.5 w-3.5" strokeWidth={1.5} />
+                </button>
+              </div>
+              <div className="flex justify-between font-mono text-[0.55rem] uppercase tracking-[0.2em] text-band-foreground/40">
+                <span>{MIN_SECONDS}s</span>
+                <span>{MAX_SECONDS}s</span>
+              </div>
             </div>
           </>
         )}
